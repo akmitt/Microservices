@@ -10,6 +10,8 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -34,9 +36,9 @@ public class ApplicationClientApplication {
 		SpringApplication.run(ApplicationClientApplication.class, args);
 	}
 
-	@RequestMapping("/")
+	@GetMapping("/getProduct/{id}")
 	
-	public ResponseEntity<Products> callService() {
+	public ResponseEntity<Products> getProduct(@PathVariable String id) {
 		/* RestTemplate restTemplate= restTemplateBuilder.build(); */
 		/*
 		 * System.out.println(eurekaClient); InstanceInfo
@@ -45,7 +47,8 @@ public class ApplicationClientApplication {
 		 * restTemplate.getForObject("http://ADD-PRODUCT-SERVICE",
 		 * String.class);
 		 */
-		Products p= serviceCLient.getProduct();
+		System.out.println(id);
+		Products p= serviceCLient.getProduct(id);
 	
 		return  new ResponseEntity<>(p,HttpStatus.OK);
 

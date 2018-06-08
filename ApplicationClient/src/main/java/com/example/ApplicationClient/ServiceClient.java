@@ -14,13 +14,13 @@ public class ServiceClient {
 	private RestTemplate restTemplate;
 
 	@HystrixCommand(fallbackMethod = "unknown")
-	public Products getProduct() {
+	public Products getProduct(String id) {
 		return restTemplate.getForObject("http://ADD-PRODUCT-SERVICE/getProduct/123", Products.class);
 	}
 
-	public Products unknown() {
+	public Products unknown(String id) {
 		Products c= new Products();
-		c.setName("No product found");
+		c.setName("No product found for requested"+ id);
 		return c;
 	}
 
