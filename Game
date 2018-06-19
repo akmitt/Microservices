@@ -1,0 +1,113 @@
+import java.util.Random;
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String args[]) {
+		Scanner in = new Scanner(System.in);
+		Random rand = new Random();
+		// Game Variables
+
+		String[] enenmies = { "Skelton", "Zommbie", "Assasin" };
+
+		int maxEnemyHealth = 75;
+		int enemyAttackDamage = 25;
+
+		// Player variables
+		int health = 100;
+		int attackDamage = 50;
+		int numHeathPortions = 3;
+		int healthPortionHealAmount = 30;
+		int healthPortionDropChance = 90;
+
+		boolean running = true;
+		System.out.println("Welcome to the dungeon");
+		GAME: while (running) {
+			System.out.println("---------------");
+			int enemyHealth = rand.nextInt(maxEnemyHealth);
+
+			String enemy = enenmies[rand.nextInt(enenmies.length)];
+
+			System.out.println(" Be aware new enemy has come " + enemy);
+			while (enemyHealth > 0) {
+
+				System.out.println(" Player Health " + health);
+				System.out.println(" Enemy Health " + enemyHealth);
+				System.out.println(" What would you like to do ");
+				System.out.println(" 1 Attack ");
+				System.out.println(" 2 Drink health Portion ");
+				System.out.println(" 3 Run Away ");
+				String input = in.nextLine();
+				if (input.equals("1")) {
+					
+					int damageDealt=rand.nextInt(attackDamage);
+					int damageTaken= rand.nextInt(enemyAttackDamage);
+					enemyHealth-=damageDealt;
+					health-=damageTaken;
+					
+					System.out.println(" You Strike the  Enemy " + enemy  +" "+ damageDealt);
+					System.out.println("You recieved  " + damageTaken  +" in attack");
+					
+					if(health<=1)
+					{
+						System.out.println(" You are about to die");
+						break;
+					}
+
+				} else if (input.equals("2")) {
+					if(numHeathPortions>2)
+					{
+						health+=healthPortionHealAmount;
+						numHeathPortions--;
+						System.out.println(" You have taken the Health portion " + healthPortionHealAmount);
+						System.out.println(" Yyour health is now " + health);
+					}
+					else
+					{
+						System.out.println(" You have no heath portion Left");
+					}
+
+				} else if (input.equals("3")) {
+					System.out.println(" Run away from enemy " + enemy);
+					continue GAME;
+				}
+
+				else {
+					System.out.println(" Invalid command ");
+				}
+
+			}
+			if(health<1){
+			System.out.println("You are weak from battle");
+			break;
+		}
+			System.out.println(enemy + " was defeated");
+			System.out.println(" Yyour health  left is  " + health);
+			if(rand.nextInt(100)<healthPortionDropChance)
+			{
+				numHeathPortions++;
+				System.out.println(" Enemy dropped the health portion");
+				System.out.println(" you have now " + numHeathPortions);
+				
+			}
+			System.out.println(" What would you like to do now");
+			System.out.println(" 1 Continue");
+			System.out.println(" 2 Exit");
+			String i= in.nextLine();
+			while(!i.equalsIgnoreCase("1") && !i.equalsIgnoreCase("2")){
+				System.out.println(" invalid inout");
+				i=in.nextLine();
+			}
+			if(i.equalsIgnoreCase("1"))
+			{
+				System.out.println("Continue");
+			}
+			else if(i.equalsIgnoreCase("2"))
+			{
+				System.out.println("Exit ");
+				break;
+			}
+		}
+		System.out.println("Thanks for playing");
+	}
+
+}
